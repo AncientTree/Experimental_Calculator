@@ -206,6 +206,8 @@ namespace 实验计算
 
         private void About_OnClick(object sender, RoutedEventArgs e)
         {
+            About aboutWin = new About {Owner = this};
+            aboutWin.ShowDialog();
         }
 
         private void Settings_OnClick(object sender, RoutedEventArgs e)

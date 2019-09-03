@@ -40,8 +40,8 @@
                 <!--     <MenuItem Height="26" Header="Save"></MenuItem> -->
                 <!--     <MenuItem Height="26" Header="Delete"></MenuItem> -->
                 <!-- </MenuItem > -->
-                <MenuItem Height="26" Header="设置" Click="Settings_OnClick"></MenuItem>
-                <MenuItem Height="26" Header="关于" Click="About_OnClick"></MenuItem>
+                <MenuItem FontFamily="Microsoft YaHei" Height="26" Header="设置" Click="Settings_OnClick"></MenuItem>
+                <MenuItem FontFamily="Microsoft YaHei" Height="26" Header="关于&amp;帮助" Click="About_OnClick"></MenuItem>
             </Menu>
             
             
