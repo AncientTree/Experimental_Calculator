@@ -1,0 +1,73 @@
+﻿<Window x:Class="实验计算.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:实验计算"
+        mc:Ignorable="d"
+        Title="设置" Height="380" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <materialDesign:Card Margin="20,20,20,20" Height="300">
+        <StackPanel Margin="20, 20, 20, 20" HorizontalAlignment="Left">
+            <TextBlock TextWrapping = "Wrap" Margin="5"
+                       Text="这两项设置将决定计算页面的压缩强度、压缩模量计算哪两个压缩比的数据，注意，所选的压缩百分比不要大于你实际的压缩百分比。">
+            </TextBlock>
+            <StackPanel Orientation="Horizontal">
+
+                <Label VerticalAlignment="Center">压缩百分比1：</Label>
+                <ComboBox Width="60" Margin="10" Name="ComboBox1">
+                    <ComboBoxItem >10%</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">20%</ComboBoxItem>
+                    <ComboBoxItem>30%</ComboBoxItem>
+                    <ComboBoxItem>40%</ComboBoxItem>
+                    <ComboBoxItem>50%</ComboBoxItem>
+                    <ComboBoxItem>60%</ComboBoxItem>
+                    <ComboBoxItem>70%</ComboBoxItem>
+                    <ComboBoxItem>80%</ComboBoxItem>
+                    <ComboBoxItem>90%</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label VerticalAlignment="Center">压缩百分比2：</Label>
+
+                <ComboBox Width="60" Margin="10" Name="ComboBox2">
+                    <ComboBoxItem>10%</ComboBoxItem>
+                    <ComboBoxItem>20%</ComboBoxItem>
+                    <ComboBoxItem>30%</ComboBoxItem>
+                    <ComboBoxItem>40%</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">50%</ComboBoxItem>
+                    <ComboBoxItem>60%</ComboBoxItem>
+                    <ComboBoxItem>70%</ComboBoxItem>
+                    <ComboBoxItem>80%</ComboBoxItem>
+                    <ComboBoxItem>90%</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <Rectangle Height="96" Width="500"></Rectangle>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="500">
+                <Rectangle Width="280"></Rectangle>
+                <Button Width="80" Height="25" Margin="10,0,10,0" Content="保存设置" FontSize="12" Click="Settings_Save"></Button>
+                <Button Width="80" Height="25" Margin="10,0,10,0" Content="取消" FontSize="12" Click="Settings_Cancel"></Button>
+            </StackPanel>
+
+
+        </StackPanel>
+
+    </materialDesign:Card>
+    
+</Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,15 +58,20 @@ namespace 实验计算
 
             double areage = Math.PI * Math.Pow((current_line_Diameter / 2), 2) * 10e-6;
 
+            // 第1个需要被计算的压缩强度、模量的【位移百分比】
+            double xPercent1 = Double.Parse(ConfigurationManager.AppSettings["x-Percent-1"]);
+            // 第2个需要被计算的压缩强度、模量的【位移百分比】
+            double xPercent2 = Double.Parse(ConfigurationManager.AppSettings["x-Percent-2"]);
 
-            double percent20Force = Calculate_xPercent_Force(0.2);
-            double percent50Force = Calculate_xPercent_Force(0.5);
+
+            double xPercent1Force = Calculate_xPercent_Force(xPercent1);
+            double xPercent2Force = Calculate_xPercent_Force(xPercent2);
             Dictionary<String, double> result = new Dictionary<string, double>();
-            result.Add("Percent20Strength", percent20Force / areage);
-            Console.WriteLine(percent20Force / areage);
-            result.Add("Percent50Strength", percent50Force / areage);
-            result.Add("Percent20Modulus", percent20Force / areage * 5);
-            result.Add("Percent50Modulus", percent50Force / areage * 2);
+            result.Add("xPercent1Strength", xPercent1Force / areage);
+            Console.WriteLine(xPercent1Force / areage);
+            result.Add("xPercent2Strength", xPercent2Force / areage);
+            result.Add("xPercent1Modulus", xPercent1Force / areage / xPercent1);
+            result.Add("xPercent2Modulus", xPercent2Force / areage / xPercent2);
 
             if (isCalDensity)
             {

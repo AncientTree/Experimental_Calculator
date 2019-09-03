@@ -3,14 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mdix="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:实验计算"
-        mc:Ignorable="d"
-        Title="实验计算" Height="500" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" 
+        Title="实验计算" Height="520" Width="820" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
         
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="#FFFEFEFE"
         TextElement.FontWeight="Medium"
+        
         >
 
 
@@ -27,10 +29,28 @@
 
     </Window.Resources>
 
-	<TabControl x:Name="tabControl" HorizontalAlignment="Center" Height="440" Margin="5,10,5,10" VerticalAlignment="Center" Width="760"
-				 BorderBrush="DarkCyan" IsTabStop="False">
-		<TabItem Header="压缩强度、模量、密度" >
-			<StackPanel Background="#FFFEFEFE" Orientation="Horizontal">
+    <StackPanel>
+
+        <DockPanel>
+            <!--停靠布局，让菜单栏和工具栏位于窗口顶部-->
+            <Menu DockPanel.Dock="Top" Height="28" FontSize="12" Background="#FFFEFEFE">
+                <!-- <MenuItem Header="File" Height="26"> -->
+                <!--     ~1~菜单项为MenuItem，文字使用属性 Header@1@ -->
+                <!--     <MenuItem Name="menuOpen" Header="Open" Height="26"></MenuItem> -->
+                <!--     <MenuItem Height="26" Header="Save"></MenuItem> -->
+                <!--     <MenuItem Height="26" Header="Delete"></MenuItem> -->
+                <!-- </MenuItem > -->
+                <MenuItem Height="26" Header="设置" Click="Settings_OnClick"></MenuItem>
+                <MenuItem Height="26" Header="关于" Click="About_OnClick"></MenuItem>
+            </Menu>
+            
+            
+        </DockPanel>
+
+    <materialDesign:Card x:Name="tabControl" HorizontalAlignment="Center" Height="420" Margin="5,10,5,10" VerticalAlignment="Bottom" Width="760"
+				  IsTabStop="False">
+
+            <StackPanel Background="#FFFEFEFE" Orientation="Horizontal">
 				<StackPanel Orientation="Vertical" Width="550">
 					<StackPanel Orientation="Horizontal" Margin="10, 10, 10, 10">
 						<TextBox x:Name="input_file_path" Width="400" Height="25" VerticalContentAlignment="Center" Margin="1,1,1,1"/>
@@ -51,7 +71,7 @@
 							<ColumnDefinition Width="10*"/>
 						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="28"/>
+							<RowDefinition Height="40"/>
 							<RowDefinition Height="28"/>
 							<RowDefinition Height="28"/>
 							<RowDefinition Height="28"/>
@@ -67,10 +87,15 @@
 						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="高" Grid.Column="2" Grid.Row="0"/>
 						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="质量" Grid.Column="3" Grid.Row="0"/>
 						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="密度" Grid.Column="4" Grid.Row="0"/>
-						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="20%强度" Grid.Column="5" Grid.Row="0"/>
-						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="50%强度" Grid.Column="6" Grid.Row="0"/>
-						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="20%模量" Grid.Column="7" Grid.Row="0"/>
-						<TextBlock Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="50%模量" Grid.Column="8" Grid.Row="0"/>
+                        <!-- <ComboBox x:Name="StrengthComboBoxOne" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="5" Grid.Row="0"> -->
+                        <!--     <ComboBoxItem x:Name="Percent40StrengthComboBoxItem" IsSelected="True">20%强度</ComboBoxItem> -->
+                        <!--     <ComboBoxItem >10%强度</ComboBoxItem> -->
+                        <!-- </ComboBox> -->
+
+                        <TextBlock Name="XPercent1StrengthTextBlock" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="5" Grid.Row="0"/>
+                        <TextBlock Name="XPercent2StrengthTextBlock" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="6" Grid.Row="0"/>
+                        <TextBlock Name="XPercent1ModulusTextBlock" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="7" Grid.Row="0"/>
+                        <TextBlock Name="XPercent2ModulusTextBlock" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="8" Grid.Row="0"/>
 					</Grid>
 
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,10,10" >
@@ -84,17 +109,17 @@
 
 				</StackPanel>
                 <StackPanel Orientation="Vertical">
-                    <TextBlock x:Name="testBlock" Text="测试文本" FontSize="14" Margin="1,1,1,1" Width="200" Padding="1,1,1,1" TextWrapping="Wrap">
+                    <TextBlock x:Name="testBlock" Text="测试文本" FontSize="14" Margin="5,10,5,10" Width="200" Padding="1,1,1,1" TextWrapping="Wrap">
 
                     </TextBlock>
                 </StackPanel>
 				
 
 			</StackPanel>
-		</TabItem>
-		<TabItem Header="密度">
-			<Grid Background="#FFFEFEFE"/>
-		</TabItem>
-	</TabControl>
+		
+	</materialDesign:Card>
+
+    </StackPanel>
+
 
 </Window>

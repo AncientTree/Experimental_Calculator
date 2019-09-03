@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Configuration;
 using System.IO;
 
@@ -23,6 +14,7 @@ namespace 实验计算
     public partial class MainWindow : Window
 
     {
+        public Configuration config;
 
         private static int pos { set; get; } = 0;
         private List<DataRow> dataRows = new List<DataRow>();
@@ -32,6 +24,8 @@ namespace 实验计算
         {
 
             InitializeComponent();
+            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             InitLayout();
         }
         
@@ -89,12 +83,13 @@ namespace 实验计算
             {
                 if (input_file_path.Text.Trim() != "")
                 {
+                    
                     // 加入变量用于计算五个平均值，变量名含average，但到输出时才除以行数取得平均值
                     double averageDensity = 0;
-                    double averagePercent20Strength = 0;
-                    double averagePercent50Strength = 0;
-                    double averagePercent20Modulus = 0;
-                    double averagePercent50Modulus = 0;
+                    double averageXPercent1Strength = 0;
+                    double averageXPercent2Strength = 0;
+                    double averageXPercent1Modulus = 0;
+                    double averageXPercent2Modulus = 0;
 
                     foreach (DataRow row in dataRows)
                     {
@@ -108,10 +103,10 @@ namespace 实验计算
 
                         // 更新平均数变量
                         averageDensity += result["Density"];
-                        averagePercent20Strength += result["Percent20Strength"];
-                        averagePercent50Strength += result["Percent50Strength"];
-                        averagePercent20Modulus += result["Percent20Modulus"];
-                        averagePercent50Modulus += result["Percent50Modulus"];
+                        averageXPercent1Strength += result["xPercent1Strength"];
+                        averageXPercent2Strength += result["xPercent2Strength"];
+                        averageXPercent1Modulus += result["xPercent1Modulus"];
+                        averageXPercent2Modulus += result["xPercent2Modulus"];
 
                         /*
                         testBlock.Text += calculator.Sheets[0].GetRow(2).GetCell(0).NumericCellValue.ToString();
@@ -126,10 +121,10 @@ namespace 实验计算
 
 
                         // 更新TextBox
-                        row.Set20Strength(result["Percent20Strength"]);
-                        row.Set50Strength(result["Percent50Strength"]);
-                        row.Set20Modulus(result["Percent20Modulus"]);
-                        row.Set50Modulus(result["Percent50Modulus"]);
+                        row.Set20Strength(result["xPercent1Strength"]);
+                        row.Set50Strength(result["xPercent2Strength"]);
+                        row.Set20Modulus(result["xPercent1Modulus"]);
+                        row.Set50Modulus(result["xPercent2Modulus"]);
                         if (row.GetMass() != 0)
                         {
                             row.SetDensity(result["Density"]);
@@ -137,11 +132,11 @@ namespace 实验计算
                     }
 
                     // 数据行循环结束，输出平均数
-                    testBlock.Text += ("\n平均密度：" + String.Format("{0:G3}", averageDensity / dataRows.Count));
-                    testBlock.Text += ("\n平均强度(20%)：" + String.Format("{0:G3}", averagePercent20Strength / dataRows.Count));
-                    testBlock.Text += ("\n平均强度(50%)：" + String.Format("{0:G3}", averagePercent50Strength / dataRows.Count));
-                    testBlock.Text += ("\n平均模量(20%)：" + String.Format("{0:G3}", averagePercent20Modulus / dataRows.Count));
-                    testBlock.Text += ("\n平均模量(50%)：" + String.Format("{0:G3}", averagePercent50Modulus / dataRows.Count));
+                    testBlock.Text += ("\n平均密度：" + $"{averageDensity / dataRows.Count:G3}");
+                    testBlock.Text += ("\n平均" + XPercent1StrengthTextBlock.Text + "：" + $"{averageXPercent1Strength / dataRows.Count:G3}");
+                    testBlock.Text += ("\n平均" + XPercent2StrengthTextBlock.Text + "：" + $"{averageXPercent2Strength / dataRows.Count:G3}");
+                    testBlock.Text += ("\n平均" + XPercent1ModulusTextBlock.Text + "：" + String.Format("{0:G3}", averageXPercent1Modulus / dataRows.Count));
+                    testBlock.Text += ("\n平均" + XPercent2ModulusTextBlock.Text + "：" + String.Format("{0:G3}", averageXPercent2Modulus / dataRows.Count));
 
                 }
                 else
@@ -169,11 +164,12 @@ namespace 实验计算
             {
                 AddRow();
             }
+
+            RefreshHeader();
         }
         
         private void Open_xls_file_button_Click(object sender, RoutedEventArgs e)
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             String initialDirectory = @"C:\";
             if (Directory.Exists(ConfigurationManager.AppSettings["initialDirectory"]))
@@ -206,6 +202,37 @@ namespace 实验计算
 
             }
             
+        }
+
+        private void About_OnClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Settings_OnClick(object sender, RoutedEventArgs e)
+        {
+            Settings settingsWin = new Settings {Owner = this};
+            settingsWin.ShowDialog();
+
+        }
+
+        public void RefreshHeader()
+        {
+            ConfigurationManager.RefreshSection("appSettings");
+            double xPercent1 = double.Parse(ConfigurationManager.AppSettings["x-Percent-1"]);
+            double xPercent2 = double.Parse(ConfigurationManager.AppSettings["x-Percent-2"]);
+
+            Console.WriteLine(
+                $@"读取设定自AppSettings：({ConfigurationManager.AppSettings["x-Percent-1"]}, {ConfigurationManager.AppSettings["x-Percent-2"]})");
+            //以下方式不支持刷新
+//            Console.WriteLine(
+//                $@"读取设定自AppSettings：({config.AppSettings.Settings["x-Percent-1"].Value}, {config.AppSettings.Settings["x-Percent-2"].Value})");
+            XPercent1StrengthTextBlock.Text = "强度" + xPercent1.ToString("P0");
+            XPercent2StrengthTextBlock.Text = "强度" + xPercent2.ToString("P0");
+
+            XPercent1ModulusTextBlock.Text = "模量" + xPercent1.ToString("P0");
+            XPercent2ModulusTextBlock.Text = "模量" + xPercent2.ToString("P0");
+
+
         }
     }
 
@@ -297,6 +324,8 @@ namespace 实验计算
                 textBox.SetValue(Grid.RowProperty, rowNumber);
                 i++;
             }
+
+
             
         }
 
@@ -307,6 +336,8 @@ namespace 实验计算
                 grid.Children.Remove(textBox);
             }
         }
+
+        
 
         public double GetDiameter()
         {
