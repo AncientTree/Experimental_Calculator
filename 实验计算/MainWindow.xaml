@@ -25,9 +25,29 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <RoutedUICommand x:Key="CalculateClick" Text="计算"/>
+            <RoutedUICommand x:Key="OpenFileClick" Text="打开文件"/>
+            <RoutedUICommand x:Key="AddRowClick" Text="添加行"/>
+            <RoutedUICommand x:Key="RemoveRowClick" Text="减少行"/>
         </ResourceDictionary>
 
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Command="{StaticResource CalculateClick}" Key="C" Gesture="Enter"/>
+        <KeyBinding Command="{StaticResource OpenFileClick}" Key="O" Gesture="Ctrl+O"/>
+        <KeyBinding Command="{StaticResource AddRowClick}" Key="A" Gesture="Plus"/>
+        <KeyBinding Command="{StaticResource RemoveRowClick}" Key="R" Gesture="Minus"/>
+
+    </Window.InputBindings>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource CalculateClick}" CanExecute="buttonCalculate"/>
+        <CommandBinding Command="{StaticResource OpenFileClick}" CanExecute="Open_xls_file_button_Click"/>
+        <CommandBinding Command="{StaticResource AddRowClick}" CanExecute="AddRow"/>
+        <CommandBinding Command="{StaticResource RemoveRowClick}" CanExecute="RemoveRow"/>
+    </Window.CommandBindings>
 
     <StackPanel>
 
@@ -99,10 +119,10 @@
 					</Grid>
 
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,10,10" >
-						<Rectangle Width="220" Height="25"/>
+						<Rectangle Width="190" Height="25"/>
 						<Button x:Name="add_row" Width="80" Height="25" Margin="10,0,10,0" Content="增加行" Click="AddRow" FontSize="12"/>
                         <Button x:Name="remove_row" Width="80" Height="25" Margin="10,0,10,0" Content="减少行" Click="RemoveRow" FontSize="12"/>
-                        <Button x:Name="calculate" Width="80" Height="25" Margin="10,0,10,0" Content="计算" Click="buttonCalculate" FontSize="12"
+                        <Button x:Name="calculate" Width="110" Height="25" Margin="10,0,10,0" Content="计算 (Enter)" Click="buttonCalculate" FontSize="12"
                                 />
 					</StackPanel>
 					
